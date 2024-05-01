@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  webapp:
+    build: .
+    command: ["python", "main.py", "http"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+
+  socket-server:
+    build: .
+    command: ["python", "main.py", "socket"]
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
